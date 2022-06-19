@@ -3,14 +3,8 @@ import styled from 'styled-components';
 import useNetwork from '../hooks/useNetwork';
 
 const Footer = () => {
-    const [screen, setScreen] = useState(null);
     const [isFull, setIsFull] = useState(false);
     const status = useNetwork() ? 'online' : 'offline';
-
-    // Get info about the desktop screen
-    window.electronAPI.getScreenId((event, screenId) => {
-        setScreen(screenId);
-    });
 
     const toggleFullScreen = () => setIsFull(!isFull);
 
@@ -21,7 +15,7 @@ const Footer = () => {
 
     return (
         <StyledFooter>
-            <LeftSide>Screen id: {screen}</LeftSide>
+            <LeftSide>Copyright &copy;{new Date().getFullYear()}</LeftSide>
             <RightSide>
                 <FullscreenBtn
                     onClick={toggleFullScreen}

@@ -25,6 +25,7 @@ const StyledButton = styled.button`
     border: 1px solid currentColor;
     transition: color 0.3s;
     cursor: pointer;
+    outline: none;
     &:hover {
         color: var(--font-col);
     }

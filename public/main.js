@@ -5,6 +5,7 @@ const {
     ipcMain,
     screen,
     globalShortcut,
+    Menu,
 } = require('electron');
 const path = require('path');
 const isDev = require('electron-is-dev');
@@ -17,6 +18,7 @@ const {
 // Reload electron window when chancing main or renderer process
 require('electron-reloader')(module);
 
+// App Windows
 function createWindow() {
     const { width, height } = screen.getPrimaryDisplay().workAreaSize;
     const mainWindow = new BrowserWindow({
@@ -42,13 +44,35 @@ function createWindow() {
     // Open the DevTools.
     mainWindow.webContents.openDevTools();
 
-    // Event sent by preload.js
-    ipcMain.on('set-size', (event, isFull) => {
-        try {
-            mainWindow.setFullScreen(isFull);
-        } catch (error) {
-            console.log(error);
-        }
+    // Events sent by preload.js
+    ipcMain.on('show-menu', event => {
+        const template = [
+            {
+                label: 'Settings',
+                accelerator: 'CommandOrControl+S',
+                click: () => {
+                    console.log('Show settings');
+                },
+            },
+            { type: 'separator' },
+            {
+                label: 'Help',
+                accelerator: 'CommandOrControl+H',
+                click: () => {
+                    mainWindow.webContents.send('DISPLAY_HELP');
+                },
+            },
+            { type: 'separator' },
+            {
+                label: 'Close Menu',
+            },
+        ];
+        const menu = Menu.buildFromTemplate(template);
+
+        menu.popup({
+            x: 0,
+            y: 30,
+        });
     });
 
     mainWindow.on('ready-to-show', () => {
@@ -90,17 +114,19 @@ app.whenReady()
         // });
         // request.end();
     })
-    .then(createWindow);
+    .then(() => {
+        app.on('activate', () => {
+            // On macOS it's common to re-create a window in the app when the
+            // dock icon is clicked and there are no other windows open.
+            if (BrowserWindow.getAllWindows().length === 0) createWindow();
+        });
+
+        createWindow();
+    });
 
 // Quit when all windows are closed, except on macOS. There, it's common
 // for applications and their menu bar to stay active until the user quits
 // explicitly with Cmd + Q.
 app.on('window-all-closed', () => {
     if (process.platform !== 'darwin') app.quit();
-});
-
-app.on('activate', () => {
-    // On macOS it's common to re-create a window in the app when the
-    // dock icon is clicked and there are no other windows open.
-    if (BrowserWindow.getAllWindows().length === 0) createWindow();
 });

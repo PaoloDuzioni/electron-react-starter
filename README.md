@@ -10,6 +10,7 @@ Simple starter to create a desktop apps with:
 
 ## Includes
 
+- Custom menu
 - Detect online status
 - Toast Nntification
 - Send desktop notifications
