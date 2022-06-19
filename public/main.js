@@ -18,6 +18,8 @@ const {
 // Reload electron window when chancing main or renderer process
 require('electron-reloader')(module);
 
+const isMac = process.platform === 'darwin';
+
 // App Windows
 function createWindow() {
     const { width, height } = screen.getPrimaryDisplay().workAreaSize;
@@ -48,6 +50,10 @@ function createWindow() {
     ipcMain.on('show-menu', event => {
         const template = [
             {
+                label: 'Close Menu',
+            },
+            { type: 'separator' },
+            {
                 label: 'Settings',
                 accelerator: 'CommandOrControl+S',
                 click: () => {
@@ -64,14 +70,15 @@ function createWindow() {
             },
             { type: 'separator' },
             {
-                label: 'Close Menu',
+                label: 'Quit',
+                role: isMac ? 'close' : 'quit',
             },
         ];
         const menu = Menu.buildFromTemplate(template);
 
         menu.popup({
             x: 0,
-            y: 30,
+            y: 0,
         });
     });
 
