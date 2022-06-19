@@ -15,6 +15,7 @@ Simple starter to create a desktop apps with:
 - Send desktop notifications
 - Full screen toggler
 - Global keyboard shortcuts (Help tooltip)
+- API call example with `net`
 
 ## Development
 
