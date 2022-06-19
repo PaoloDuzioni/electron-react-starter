@@ -1,0 +1,36 @@
+:root {
+    /* Colors */
+    --white: 255, 255, 255; /* RGB to be used in RGBA functions */
+    --black: 0, 0, 0;
+    --font-col: #fff;
+    --bg-col: #2f3241;
+    --bg-col-dark: #212431;
+    --primary: #74b1be;
+    /* Settings */
+    --header-height: 30px;
+}
+
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto',
+        'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans',
+        'Helvetica Neue', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+    display: inline-block;
+    vertical-align: middle;
+    padding: 3px 6px;
+    background: rgba(var(--white), 0.1);
+    border-radius: 3px;
+    transform: translateY(-1px);
+}
