@@ -47,6 +47,14 @@ function createWindow() {
     mainWindow.webContents.openDevTools();
 
     // Events sent by preload.js
+    ipcMain.on('set-size', (event, isFull) => {
+        try {
+            mainWindow.setFullScreen(isFull);
+        } catch (error) {
+            console.log(error);
+        }
+    });
+
     ipcMain.on('show-menu', event => {
         const template = [
             {
@@ -135,5 +143,5 @@ app.whenReady()
 // for applications and their menu bar to stay active until the user quits
 // explicitly with Cmd + Q.
 app.on('window-all-closed', () => {
-    if (process.platform !== 'darwin') app.quit();
+    if (isMac) app.quit();
 });
