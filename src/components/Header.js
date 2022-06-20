@@ -47,4 +47,5 @@ const Brand = styled.div`
     -webkit-app-region: drag;
     text-transform: uppercase;
     font-size: 14px;
+    transform: translateY(-1px);
 `;

@@ -1,7 +1,6 @@
 const {
     app,
     BrowserWindow,
-    desktopCapturer,
     ipcMain,
     screen,
     globalShortcut,
@@ -46,7 +45,9 @@ function createWindow() {
     // Open the DevTools.
     mainWindow.webContents.openDevTools();
 
-    // Events sent by preload.js
+    /***  Events sent by preload.js ***/
+
+    // Fullscreen toggle
     ipcMain.on('set-size', (event, isFull) => {
         try {
             mainWindow.setFullScreen(isFull);
@@ -55,10 +56,11 @@ function createWindow() {
         }
     });
 
+    // Show main menu
     ipcMain.on('show-menu', event => {
         const template = [
             {
-                label: 'Close Menu',
+                label: 'Hide Menu',
             },
             { type: 'separator' },
             {
@@ -90,22 +92,10 @@ function createWindow() {
         });
     });
 
-    mainWindow.on('ready-to-show', () => {
-        // Get native infos and pass it to preload
-        desktopCapturer.getSources({ types: ['screen'] }).then(sources => {
-            for (const source of sources) {
-                if (source.name === 'Screen 1') {
-                    mainWindow.webContents.send('SET_SOURCE_ID', source.id);
-                    return;
-                }
-            }
-        });
-
-        // GLOBAL KEYBOARD SHORTCUTS
-        globalShortcut.register('CommandOrControl+H', () => {
-            console.log('CommandOrControl+H is pressed');
-            mainWindow.webContents.send('DISPLAY_HELP');
-        });
+    // GLOBAL KEYBOARD SHORTCUTS
+    globalShortcut.register('CommandOrControl+H', () => {
+        console.log('CommandOrControl+H is pressed');
+        mainWindow.webContents.send('DISPLAY_HELP');
     });
 }
 
