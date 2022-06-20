@@ -10,9 +10,9 @@ Simple starter to create a desktop apps with:
 
 ## Includes
 
-- Custom menu
+- Custom app menu
 - Detect online status
-- Toast Nntification
+- Toast notification
 - Send desktop notifications
 - Full screen toggler
 - Global keyboard shortcuts (Help tooltip)
@@ -23,9 +23,7 @@ Simple starter to create a desktop apps with:
 In the project directory run:
 
 1. `npm install` to install the dependencies.
-
 2. `npm run start` to start React dev server.
-
 3. `npm run electron` to start the electron app in the development mode.
 
 The app will reload when you save changes.
